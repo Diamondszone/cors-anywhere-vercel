@@ -6,13 +6,17 @@
       "maxDuration": 10
     }
   },
-  "routes": [
-    { "src": "^/corsdemo$", "dest": "/api/corsdemo" },
+  "rewrites": [
+    { "source": "/corsdemo", "destination": "/api/corsdemo" },
 
-    { "src": "^/(https?:\\/\\/.*)$", "dest": "/api/$1" },
+    // Gaya ASLI: root menangkap http(s)://
+    { "source": "/https:/(.*)", "destination": "/api/https://$1" },
+    { "source": "/http:/(.*)", "destination": "/api/http://$1" },
 
-    { "src": "^/api/(.*)$", "dest": "/api/$1" },
+    // Tetap izinkan akses langsung ke /api/*
+    { "source": "/api/(.*)", "destination": "/api/$1" },
 
-    { "src": "^/api$", "dest": "/api" }
+    // Fallback query style: /api?url=...
+    { "source": "/api", "destination": "/api" }
   ]
 }
