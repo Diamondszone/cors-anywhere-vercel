@@ -1,22 +1,18 @@
 {
   "functions": {
     "api/proxy.js": {
-      "runtime": "nodejs18.x",
+      "runtime": "nodejs20.x",
       "memory": 128,
       "maxDuration": 10
     }
   },
-  "rewrites": [
-    { "source": "/corsdemo",        "destination": "/api/proxy" },
+  "routes": [
+    { "src": "/corsdemo",         "dest": "/api/proxy" },
 
-    // 🔑 Gaya ASLI: panggilan di ROOT akan diarahkan ke handler proxy
-    { "source": "/https:/(.*)",     "destination": "/api/proxy?url=https://$1" },
-    { "source": "/http:/(.*)",      "destination": "/api/proxy?url=http://$1" },
+    { "src": "^/https:/(.*)$",    "dest": "/api/proxy?url=https://$1" },
+    { "src": "^/http:/(.*)$",     "dest": "/api/proxy?url=http://$1" },
 
-    // Tetap dukung panggilan langsung di bawah /api/
-    { "source": "/api/(.*)",        "destination": "/api/proxy?url=$1" },
-
-    // Fallback untuk /api dan / (demo)
-    { "source": "/api",             "destination": "/api/proxy" }
+    { "src": "^/api/(.*)$",       "dest": "/api/proxy?url=$1" },
+    { "src": "^/api$",            "dest": "/api/proxy" }
   ]
 }
