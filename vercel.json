@@ -2,8 +2,10 @@
   "routes": [
     { "src": "/corsdemo",         "dest": "/api/proxy" },
 
+
     { "src": "^/https:/(.*)$",    "dest": "/api/proxy?url=https://$1" },
     { "src": "^/http:/(.*)$",     "dest": "/api/proxy?url=http://$1" },
+
 
     { "src": "^/api/(.*)$",       "dest": "/api/proxy?url=$1" },
     { "src": "^/api$",            "dest": "/api/proxy" }
