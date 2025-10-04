@@ -2,6 +2,8 @@
   "name": "cors-anywhere-vercel",
   "private": true,
   "version": "1.0.0",
-  "dependencies": { "cors-anywhere": "^0.4.4" },
+  "dependencies": {
+    "cors-anywhere": "^0.4.4"
+  },
   "engines": { "node": ">=18" }
 }
