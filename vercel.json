@@ -1,11 +1,4 @@
 {
-  "functions": {
-    "api/proxy.js": {
-      "runtime": "nodejs20.x",
-      "memory": 128,
-      "maxDuration": 10
-    }
-  },
   "routes": [
     { "src": "/corsdemo",         "dest": "/api/proxy" },
 
