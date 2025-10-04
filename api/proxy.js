@@ -15,8 +15,8 @@ const originWhitelist = (process.env.CORSANYWHERE_WHITELIST || '')
 // - buang header cookie/cookie2
 const server = corsAnywhere.createServer({
   originWhitelist,                               // [] = izinkan semua (tidak disarankan untuk publik)
-  //requireHeader: ['origin', 'x-requested-with'],
-  requireHeader: [],
+  requireHeader: ['origin', 'x-requested-with'],
+  //requireHeader: [],
   removeHeaders: ['cookie', 'cookie2'],
   // corsMaxAge: 600,                            // aktifkan jika mau cache preflight
 });
