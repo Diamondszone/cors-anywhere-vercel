@@ -1,22 +1,18 @@
 {
   "functions": {
-    "api/[...proxy].js": {
+    "api/proxy.js": {
       "runtime": "nodejs18.x",
       "memory": 128,
       "maxDuration": 10
     }
   },
   "rewrites": [
-    { "source": "/corsdemo", "destination": "/api/corsdemo" },
+    { "source": "/corsdemo",      "destination": "/api/proxy?url=corsdemo" },
 
+    { "source": "/https:/(.*)",   "destination": "/api/proxy?url=https://$1" },
+    { "source": "/http:/(.*)",    "destination": "/api/proxy?url=http://$1" },
 
-    { "source": "/https:/(.*)", "destination": "/api/https://$1" },
-    { "source": "/http:/(.*)", "destination": "/api/http://$1" },
-
-
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-
-
-    { "source": "/api", "destination": "/api" }
+    { "source": "/api/(.*)",      "destination": "/api/proxy?url=$1" },
+    { "source": "/api",           "destination": "/api/proxy" }
   ]
 }
