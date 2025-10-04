@@ -26,4 +26,5 @@ app.use((req, res) => {
     proxy.emit('request', req, res);
 });
 
-module.exports = app;
+module.exports = (req, res) => app(req, res);
+
