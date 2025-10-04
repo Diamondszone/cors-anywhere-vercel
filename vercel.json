@@ -7,12 +7,16 @@
     }
   },
   "rewrites": [
-    { "source": "/corsdemo",      "destination": "/api/proxy?url=corsdemo" },
+    { "source": "/corsdemo",        "destination": "/api/proxy" },
 
-    { "source": "/https:/(.*)",   "destination": "/api/proxy?url=https://$1" },
-    { "source": "/http:/(.*)",    "destination": "/api/proxy?url=http://$1" },
+    // 🔑 Gaya ASLI: panggilan di ROOT akan diarahkan ke handler proxy
+    { "source": "/https:/(.*)",     "destination": "/api/proxy?url=https://$1" },
+    { "source": "/http:/(.*)",      "destination": "/api/proxy?url=http://$1" },
 
-    { "source": "/api/(.*)",      "destination": "/api/proxy?url=$1" },
-    { "source": "/api",           "destination": "/api/proxy" }
+    // Tetap dukung panggilan langsung di bawah /api/
+    { "source": "/api/(.*)",        "destination": "/api/proxy?url=$1" },
+
+    // Fallback untuk /api dan / (demo)
+    { "source": "/api",             "destination": "/api/proxy" }
   ]
 }
