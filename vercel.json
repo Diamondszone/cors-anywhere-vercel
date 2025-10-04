@@ -1,14 +1,18 @@
 {
   "functions": {
-    "api/proxy.js": {
+    "api/[...proxy].js": {
       "runtime": "nodejs18.x",
       "memory": 128,
       "maxDuration": 10
     }
   },
   "routes": [
-    { "src": "^/(https?:\\/\\/.*)$", "dest": "/api/proxy?url=$1" },
-    { "src": "^/api/(https?:\\/\\/.*)$", "dest": "/api/proxy?url=$1" },
-    { "src": "^/api$", "dest": "/api/proxy" }
+    { "src": "^/corsdemo$", "dest": "/api/corsdemo" },
+
+    { "src": "^/(https?:\\/\\/.*)$", "dest": "/api/$1" },
+
+    { "src": "^/api/(.*)$", "dest": "/api/$1" },
+
+    { "src": "^/api$", "dest": "/api" }
   ]
 }
