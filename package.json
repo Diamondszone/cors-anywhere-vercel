@@ -5,5 +5,5 @@
   "dependencies": {
     "cors-anywhere": "^0.4.4"
   },
-  "engines": { "node": ">=18" }
+  "packageManager": "npm@10"
 }
