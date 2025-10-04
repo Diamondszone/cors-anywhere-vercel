@@ -24,7 +24,8 @@ try {
 const server = corsAnywhere.createServer({
   originBlacklist,
   originWhitelist,
-  requireHeader: ['origin', 'x-requested-with'],   // → sama seperti default asli
+  // requireHeader: ['origin', 'x-requested-with'],   // → sama seperti default asli
+  requireHeader: [],
   checkRateLimit,                                   // aktif jika modul tersedia & ENV diset
   removeHeaders: [
     'cookie',
