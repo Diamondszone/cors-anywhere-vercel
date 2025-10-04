@@ -1,23 +1,14 @@
 {
   "functions": {
-    "api/[...proxy].js": {
+    "api/proxy.js": {
       "runtime": "nodejs18.x",
       "memory": 128,
       "maxDuration": 10
     }
   },
   "routes": [
-    // Halaman demo
-    { "src": "^/corsdemo$", "dest": "/api/corsdemo" },
-
-    // Gaya ASLI: /https://target.tld/...
-    // (match path yang diawali http:// atau https://)
-    { "src": "^/(https?:\\/\\/.*)$", "dest": "/api/$1" },
-
-    // Fallback untuk query style /api?url=...
-    { "src": "^/api$", "dest": "/api" },
-
-    // Tetap izinkan pemanggilan langsung /api/<something>
-    { "src": "^/api/(.*)$", "dest": "/api/$1" }
+    { "src": "^/(https?:\\/\\/.*)$", "dest": "/api/proxy?url=$1" },
+    { "src": "^/api/(https?:\\/\\/.*)$", "dest": "/api/proxy?url=$1" },
+    { "src": "^/api$", "dest": "/api/proxy" }
   ]
 }
