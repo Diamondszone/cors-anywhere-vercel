@@ -1,16 +1,24 @@
 {
   "routes": [
-    {
-      "src": "/(https?://.*)",
-      "dest": "/api/proxy?url=https:$1"
+    { 
+      "src": "^/corsdemo$", 
+      "dest": "/api/proxy" 
     },
-    {
-      "src": "/api/proxy",
-      "dest": "/api/proxy"
+    { 
+      "src": "^/api/proxy$", 
+      "dest": "/api/proxy" 
     },
-    {
-      "src": "/(.*)",
-      "dest": "/api/proxy"
+    { 
+      "src": "^/https://(.*)$", 
+      "dest": "/api/proxy?url=https://$1" 
+    },
+    { 
+      "src": "^/http://(.*)$", 
+      "dest": "/api/proxy?url=http://$1" 
+    },
+    { 
+      "src": "^/(.*)$", 
+      "dest": "/api/proxy?url=https://$1" 
     }
   ]
 }
