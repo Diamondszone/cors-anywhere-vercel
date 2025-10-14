@@ -1,6 +1,14 @@
 {
   "routes": [
     {
+      "src": "/(https?://.*)",
+      "dest": "/api/proxy"
+    },
+    {
+      "src": "/api/proxy",
+      "dest": "/api/proxy"
+    },
+    {
       "src": "/(.*)",
       "dest": "/api/proxy"
     }
