@@ -1,15 +1,19 @@
 {
   "routes": [
     {
-      "src": "/(https?://.*)",
+      "src": "^/iscorsneeded$",
       "dest": "/api/proxy"
     },
     {
-      "src": "/api/proxy",
+      "src": "^/api/proxy$",
       "dest": "/api/proxy"
     },
     {
-      "src": "/(.*)",
+      "src": "^(/?https?://.*)$",
+      "dest": "/api/proxy"
+    },
+    {
+      "src": "^(/.*)$",
       "dest": "/api/proxy"
     }
   ]
