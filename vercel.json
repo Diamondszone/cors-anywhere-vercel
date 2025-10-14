@@ -4,5 +4,10 @@
       "src": "/(.*)",
       "dest": "/api/proxy"
     }
-  ]
+  ],
+  "functions": {
+    "api/proxy.js": {
+      "maxDuration": 30
+    }
+  }
 }
