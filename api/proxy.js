@@ -1,21 +1,23 @@
-// api/proxy.js - Simple version
+// api/proxy.js - Simplified version for double slash only
 const corsAnywhere = require('cors-anywhere');
 
 // Create CORS Anywhere server
 const server = corsAnywhere.createServer({
   originBlacklist: [],
   originWhitelist: [], 
-  requireHeader: [], // No headers required
+  requireHeader: ['origin', 'x-requested-with'],
   removeHeaders: ['cookie', 'cookie2'],
   redirectSameOrigin: true,
   httpProxyOptions: { xfwd: false },
 });
 
 module.exports = (req, res) => {
+  console.log('Incoming request:', req.method, req.url);
+  
   // Add CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE, PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Origin');
 
   // Handle OPTIONS preflight
   if (req.method === 'OPTIONS') {
@@ -26,18 +28,31 @@ module.exports = (req, res) => {
   // Handle root - show simple info
   if (req.url === '/' || req.url === '') {
     res.setHeader('content-type', 'text/plain');
-    return res.end('CORS Anywhere Proxy - Use: /https://example.com or /api/proxy?url=https://example.com');
+    return res.end('CORS Anywhere Proxy - Usage: /https://example.com');
   }
 
-  // Handle API proxy with query parameter
-  if (req.url.startsWith('/api/proxy')) {
-    const queryString = req.url.includes('?') ? req.url.split('?')[1] : '';
-    const params = new URLSearchParams(queryString);
-    const targetUrl = params.get('url');
-    
-    if (targetUrl) {
-      req.url = `/${targetUrl}`;
-    }
+  // Extract target URL from path
+  let targetUrl = '';
+  
+  if (req.url.startsWith('/https://')) {
+    targetUrl = req.url.substring(1); // Remove first slash -> https://...
+  } else if (req.url.startsWith('/http://')) {
+    targetUrl = req.url.substring(1); // Remove first slash -> http://...
+  } else if (req.url.startsWith('/api/proxy')) {
+    // Handle query parameter format
+    const urlParams = new URLSearchParams(req.url.split('?')[1]);
+    targetUrl = urlParams.get('url') || '';
+  }
+
+  console.log('Target URL:', targetUrl);
+
+  if (targetUrl) {
+    // Rewrite URL for cors-anywhere
+    req.url = '/' + targetUrl;
+  } else {
+    // If no target URL found, return error
+    res.statusCode = 400;
+    return res.end('Bad Request: No target URL specified. Usage: /https://example.com');
   }
 
   // Proxy the request
