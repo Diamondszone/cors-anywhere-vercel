@@ -9,7 +9,11 @@
       "dest": "/api/proxy"
     },
     {
-      "src": "^(/?https?://.*)$",
+      "src": "^(/https://.*)$",
+      "dest": "/api/proxy"
+    },
+    {
+      "src": "^(/http://.*)$", 
       "dest": "/api/proxy"
     },
     {
