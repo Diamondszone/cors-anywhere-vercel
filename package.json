@@ -2,8 +2,10 @@
   "name": "cors-anywhere-vercel",
   "private": true,
   "version": "1.0.0",
+  "scripts": {
+    "start": "node api/proxy.js"
+  },
   "dependencies": {
     "cors-anywhere": "^0.4.4"
-  },
-  "packageManager": "npm@10"
+  }
 }
